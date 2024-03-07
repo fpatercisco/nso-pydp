@@ -1,0 +1,63 @@
+module pydp {
+
+  yang-version 1.1;
+
+  namespace "http://example.com/pydp";
+  prefix pydp;
+
+  import ietf-inet-types {
+    prefix inet;
+  }
+  import tailf-common {
+    prefix tailf;
+  }
+  import tailf-ncs {
+    prefix ncs;
+  }
+
+  description
+    "Example of a NSO data provider in Python";
+
+  revision 2016-01-01 {
+    description
+      "Initial revision.";
+  }
+
+  container interface {
+    list GigabitEthernet {
+      key "name";
+
+      leaf name {
+        type string;
+      }
+
+      leaf shutdown {
+        tailf:info "Shutdown the selected interface";
+        type empty;
+      }
+
+      container stats {
+        config false;
+        tailf:callpoint "stats";
+        leaf sent {
+          type uint32;
+        }
+        leaf received {
+          type uint32;
+        }
+      }
+
+      action clear {
+        tailf:actionpoint "clear";
+        output {
+          leaf sent {
+            type uint32;
+          }
+          leaf received {
+            type uint32;
+          }
+        }
+      }
+    }
+  }
+}
