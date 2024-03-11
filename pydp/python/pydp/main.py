@@ -7,7 +7,7 @@ from ncs.experimental import DataCallbacks
 
 # Data callback handler class
 # an instance of this class is registered to handle reads on the "stats" callpoint
-class InterfaceStatsCallbackHandler(object):
+class DataCbs(object):
     def __init__(self, log):
         self.log = log
 
@@ -15,10 +15,15 @@ class InterfaceStatsCallbackHandler(object):
     # https://developer.cisco.com/docs/nso/api/#!ncs-experimental/ncs.experimental.DataCallbacks.register
     def get_object(self, tctx, keypath, _args):
 
-        self.log.info(f"InterfaceStatscallbackhandler.get_object called. keypath={keypath}, _args={_args}")
+        #self.log.info("cb_get_elem: " + str(keypath))
+        self.log.info(f"DataCbs.get_object called. keypath={keypath}, _args={_args}")
 
         # This is where the fancy stuff goes.
         # Talking to a database, IPAM system, etc.
+
+        # here we just set these to example values
+        sent = 12345
+        recv = 67890
 
         # these are from the other examples. I leave them here for reference and
         # for people searching the web for them :)
@@ -27,8 +32,8 @@ class InterfaceStatsCallbackHandler(object):
 
         return {
             "stats": {
-                "sent": 12345,
-                "received": 67890
+                "sent": sent,
+                "received": recv
             }
         }
 
@@ -42,7 +47,7 @@ class Main(ncs.application.Application):
         self.log.info('Main RUNNING')
 
         # instantiate the handler
-        interface_stats_handler = InterfaceStatsCallbackHandler(self.log)
+        interface_stats_handler = DataCbs(self.log)
 
         # instantiate the DataCallbacks helper class
         dcb = DataCallbacks(self.log)

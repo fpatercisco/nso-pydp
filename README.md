@@ -28,29 +28,31 @@ Watching it Work
 2. In another window, start ncs_cli (`ncs_cli -u admin`)
 3. In ncs_cli, create an instance of the `instance GigabitEthernet` from the yang model in `config` mode:
 
-	admin@ncs> configure 
-	Entering configuration mode private
-	[ok][2024-03-07 15:38:16]
-	
-	[edit]
-	admin@ncs% set interface GigabitEthernet foo
-	[ok][2024-03-07 15:42:34]
-	
-	[edit]
-	admin@ncs% commit
-	Commit complete.
-	[ok][2024-03-07 15:42:37]
-	
-	[edit]
-	admin@ncs% exit
-	[ok][2024-03-07 15:43:19]
-	admin@ncs>show interface GigabitEthernet foo stats 
-	stats sent 12345
-	stats received 67890
-	[ok][2024-03-07 15:43:35]
-	admin@ncs>
+		admin@ncs> configure 
+		Entering configuration mode private
+		[ok][2024-03-07 15:38:16]
+		
+		[edit]
+		admin@ncs% set interface GigabitEthernet foo
+		[ok][2024-03-07 15:42:34]
+		
+		[edit]
+		admin@ncs% commit
+		Commit complete.
+		[ok][2024-03-07 15:42:37]
+		
+		[edit]
+4. Exit config mode and inspect the operational state of the `stats` leaf:
 
-4. Notice the log message in `$NCSDIR/logs/ncs-python-vm-pydp.log` shows the log message from `InterfaceStatscallbackhandler.get_object` (in main.py in this repo)
+		admin@ncs% exit
+		[ok][2024-03-07 15:43:19]
+		admin@ncs>show interface GigabitEthernet foo stats 
+		stats sent 12345
+		stats received 67890
+		[ok][2024-03-07 15:43:35]
+		admin@ncs>
+
+5. Notice the log message in `$NCSDIR/logs/ncs-python-vm-pydp.log` shows the log message from `InterfaceStatscallbackhandler.get_object` (in main.py in this repo)
 
 Reflections
 -----------
